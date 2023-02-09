@@ -3,6 +3,7 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id("org.jetbrains.compose")
+    id("io.github.skeptick.libres")
 }
 
 kotlin {
@@ -30,6 +31,7 @@ kotlin {
                 implementation(compose.material)
                 implementation(compose.runtime)
                 implementation(compose.animation)
+                implementation("io.github.skeptick.libres:libres-compose:1.1.4")
             }
         }
         val commonTest by getting {
@@ -60,11 +62,23 @@ kotlin {
     }
 }
 
+libres {
+    generatedClassName = "AppResources"
+    generateNamedArguments = true
+    baseLocaleLanguageCode = "en"
+}
+
 android {
     namespace = "com.anikinkirill.example"
-    compileSdk = 32
+    compileSdk = 33
     defaultConfig {
         minSdk = 29
-        targetSdk = 32
+        targetSdk = 33
+    }
+
+    sourceSets {
+        named("main") {
+            res.srcDirs("src/androidMain/res", "src/commonMain/resources")
+        }
     }
 }
